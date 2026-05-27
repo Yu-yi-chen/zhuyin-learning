@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { track } from '@vercel/analytics';
 import { supabase } from '../lib/supabase';
 
 const AuthContext = createContext(null);
@@ -13,8 +14,9 @@ export function AuthProvider({ children }) {
       setLoading(false);
     });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user ?? null);
+      if (event === 'SIGNED_IN') track('login', { provider: 'google' });
     });
 
     return () => subscription.unsubscribe();
