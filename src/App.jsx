@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import { AuthProvider } from './contexts/AuthContext';
 import { LangProvider } from './contexts/LangContext';
 import { GameProvider } from './contexts/GameContext';
@@ -61,6 +62,7 @@ export default function App() {
             <FeedbackButton />
             <CreditsModal open={creditsOpen} onClose={() => setCreditsOpen(false)} />
             <AboutModal  open={aboutOpen}   onClose={() => setAboutOpen(false)} />
+            <Analytics />
           </TransitionProvider>
         </BrowserRouter>
       </GameProvider>
