@@ -64,9 +64,9 @@ export default function Sidebar({ children }) {
 
         <div className="sidebar-bear">
           <div className={`sidebar-tagline-wrap${visible ? '' : ' sidebar-tagline--hidden'}`}>
-            <img src="/quote_left.png"  alt="" className="sidebar-quote sidebar-quote--left"  aria-hidden="true" />
+            <img src="/images/quote_left.png"  alt="" className="sidebar-quote sidebar-quote--left"  aria-hidden="true" />
             <p className="sidebar-tagline">{taglines[idx]}</p>
-            <img src="/quote_right.png" alt="" className="sidebar-quote sidebar-quote--right" aria-hidden="true" />
+            <img src="/images/quote_right.png" alt="" className="sidebar-quote sidebar-quote--right" aria-hidden="true" />
           </div>
           <video
             className="bear-img"

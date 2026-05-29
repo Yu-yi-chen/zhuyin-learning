@@ -14,14 +14,14 @@ export default function ResultOverlay({ onAgain, onNext }) {
   return (
     <div className="result-overlay">
       <DotLottieReact
-        src="/Confetti.lottie"
+        src="/lottie/Confetti.lottie"
         autoplay
         loop={false}
         className="result-confetti"
       />
 
       <div className="result-apple">
-        <img src="/Score_Apple.png" alt="" className="result-apple__img" aria-hidden="true" />
+        <img src="/images/Score_Apple.png" alt="" className="result-apple__img" aria-hidden="true" />
         <span className="result-apple__label">+{popup.amount}</span>
       </div>
       <div className="result-btns">

@@ -11,7 +11,7 @@ export default function Navbar({ showBack, onBack }) {
       <div className="navbar-left">
         {showBack && (
           <button className="back-btn" onClick={onBack}>
-            <img src="/Icon/house.png" alt="home" className="back-icon" />
+            <img src="/images/house.png" alt="home" className="back-icon" />
           </button>
         )}
       </div>
@@ -30,7 +30,7 @@ export default function Navbar({ showBack, onBack }) {
           <button className="home-v2__google-btn" onClick={signOut}>
             {(user.user_metadata?.avatar_url || user.user_metadata?.picture)
               ? <img src={user.user_metadata.avatar_url ?? user.user_metadata.picture} alt="" className="home-v2__google-icon" style={{borderRadius:'50%'}} />
-              : <img src="/google-logo-icon-gsuite.png" alt="Google" className="home-v2__google-icon" />
+              : <img src="/images/google-logo-icon-gsuite.png" alt="Google" className="home-v2__google-icon" />
             }
             <span>{user.user_metadata?.name ?? user.email}</span>
           </button>

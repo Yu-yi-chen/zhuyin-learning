@@ -14,7 +14,7 @@ export default function AboutModal({ open, onClose }) {
           {/* Header */}
           <div className="about-header">
             <div className="about-bear-icon">
-              <img src="/bopobear_avatar.png" alt="BopoBear" width="64" height="64" />
+              <img src="/images/bopobear_avatar.png" alt="BopoBear" width="64" height="64" />
             </div>
             <div>
               <h2 className="about-title">BopoBear</h2>

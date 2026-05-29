@@ -5,10 +5,10 @@ import { useAuth } from '../contexts/AuthContext';
 import { startBGM, playEnterGame } from '../utils/sound';
 import VolumeButton from '../components/VolumeButton';
 
-const IMG_LANDSCAPE = '/首頁草地.png';
-const IMG_CLOUD     = '/cloud.png';
-const IMG_MAP_CARD  = '/Bopo Explore Map.png';
-const IMG_LISTEN    = '/Listening Test.png';
+const IMG_LANDSCAPE = '/images/首頁草地.png';
+const IMG_CLOUD     = '/images/cloud.png';
+const IMG_MAP_CARD  = '/images/bopo-explore-map.png';
+const IMG_LISTEN    = '/images/listening-test.png';
 
 export default function HomePage() {
   const { transitionTo } = useTransition();
@@ -47,13 +47,13 @@ export default function HomePage() {
             <button className="home-v2__google-btn" onClick={signOut}>
               {(user.user_metadata?.avatar_url || user.user_metadata?.picture)
                 ? <img src={user.user_metadata.avatar_url ?? user.user_metadata.picture} alt="" className="home-v2__google-icon" style={{borderRadius:'50%'}} />
-                : <img src="/google-logo-icon-gsuite.png" alt="Google" className="home-v2__google-icon" />
+                : <img src="/images/google-logo-icon-gsuite.png" alt="Google" className="home-v2__google-icon" />
               }
               <span>{user.user_metadata?.name ?? user.email}</span>
             </button>
           ) : (
             <button className="home-v2__google-btn" onClick={signInWithGoogle}>
-              <img src="/google-logo-icon-gsuite.png" alt="Google" className="home-v2__google-icon" />
+              <img src="/images/google-logo-icon-gsuite.png" alt="Google" className="home-v2__google-icon" />
               <span>Sign in</span>
             </button>
           )}

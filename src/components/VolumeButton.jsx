@@ -53,7 +53,7 @@ export default function VolumeButton({ className = 'volume-btn', iconClassName =
         aria-expanded={open}
         onClick={handleButtonClick}
       >
-        <img src="/volume.png" alt="volume" className={iconClassName} />
+        <img src="/images/volume.png" alt="volume" className={iconClassName} />
       </button>
 
       {open && (

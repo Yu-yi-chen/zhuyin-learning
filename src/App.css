@@ -915,6 +915,108 @@ img { display: block; }
   overflow-y: auto;
 }
 
+/* ── Practice body — canvas + word panel side by side ────── */
+.practice-body {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 24px;
+  width: 100%;
+  max-width: 900px;
+}
+
+/* ── Word panel ───────────────────────────────────────────── */
+.word-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 200px;
+  flex-shrink: 0;
+  padding-top: 8px;
+}
+
+.word-panel__illustration {
+  width: 160px;
+  height: 160px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.word-panel__placeholder {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--card);
+  border: 2px dashed var(--gold);
+  border-radius: var(--radius-md);
+  opacity: 0.5;
+}
+
+.word-panel__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+}
+
+.word-panel__word {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.word-panel__char-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.word-panel__zhuyin {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.word-panel__zhuyin-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.word-panel__zhuyin-sym {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.25;
+}
+
+.word-panel__zhuyin-tone {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text);
+  align-self: center;
+  margin-left: 1px;
+}
+
+
+.word-panel__char {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1;
+}
+
+.word-panel__translation {
+  font-size: 1rem;
+  color: var(--text-muted, #888);
+  margin: 0;
+}
+
 /* ── Practice canvas ──────────────────────────────────────── */
 .practice-canvas-wrap {
   display: flex;
@@ -2042,6 +2144,11 @@ img { display: block; }
 
   /* Practice canvas / actions */
   .practice-main      { gap: 12px; padding-top: 4px; }
+  .practice-body      { flex-direction: column; align-items: center; }
+  .word-panel         { width: 100%; flex-direction: row; justify-content: center; gap: 20px; padding-top: 0; }
+  .word-panel__illustration { width: 100px; height: 100px; flex-shrink: 0; }
+  .word-panel__word   { gap: 8px; }
+  .word-panel__char   { font-size: 1.3rem; }
   .canvas-actions-row { gap: 8px; }
   .action-pill        { padding: 9px 16px; font-size: 0.84rem; }
 

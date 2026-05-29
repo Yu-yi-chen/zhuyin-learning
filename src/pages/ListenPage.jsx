@@ -159,20 +159,21 @@ export default function ListenPage() {
               {!hadWrong && (
                 <>
                   <DotLottieReact
-                    src="/Confetti.lottie" autoplay loop={false}
+                    src="/lottie/Confetti.lottie" autoplay loop={false}
                     className="lq-result-confetti"
                   />
                   <div className="result-apple lq-result-apple">
-                    <img src="/Score_Apple.png" alt="" className="result-apple__img" aria-hidden="true" />
+                    <img src="/images/Score_Apple.png" alt="" className="result-apple__img" aria-hidden="true" />
                     <span className="result-apple__label">+10</span>
                   </div>
                 </>
               )}
 
-              {/* Stroke animation — always shown */}
-              <div className="lq-result-stroke">
-                <StrokePreview key={correct.symbol} symbol={correct.symbol} size={160} />
-              </div>
+              {showStroke && (
+                <div className="lq-result-stroke">
+                  <StrokePreview key={correct.symbol} symbol={correct.symbol} size={160} />
+                </div>
+              )}
 
               <button className="lq-result-next" onClick={handleNext}>
                 {t.listenNext} →

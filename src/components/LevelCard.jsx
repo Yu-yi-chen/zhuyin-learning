@@ -14,7 +14,7 @@ export default function LevelCard() {
     <div className="level-card">
       {/* Top row */}
       <div className="level-card__header">
-        <img src="/apple.png" alt="" className="level-card__star" aria-hidden="true" />
+        <img src="/images/apple.png" alt="" className="level-card__star" aria-hidden="true" />
 
         {/* Title + badge horizontal */}
         <div className="level-card__info">

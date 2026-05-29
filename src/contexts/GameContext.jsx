@@ -1,4 +1,6 @@
-import { createContext, useContext, useState, useCallback } from 'react';
+import { createContext, useContext, useState, useCallback, useEffect, useRef } from 'react';
+import { useAuth } from './AuthContext';
+import { loadProgress, saveProgress } from '../utils/progressSync';
 
 const GameContext = createContext(null);
 
@@ -12,6 +14,11 @@ const LEVEL_THRESHOLDS = PTS_TO_NEXT.reduce(
 );
 
 export function GameProvider({ children }) {
+  const { user } = useAuth();
+  const hasSyncedRef    = useRef(false);
+  const wasLoggedInRef  = useRef(false);
+  const saveTimerRef    = useRef(null);
+
   const [points, setPoints] = useState(0);
   const [popup, setPopup] = useState(null); // { amount: 10 }
   const [completedSymbols, setCompletedSymbols] = useState(() => {
@@ -20,6 +27,52 @@ export function GameProvider({ children }) {
       return saved ? new Set(JSON.parse(saved)) : new Set();
     } catch { return new Set(); }
   });
+
+  // On login: load from Supabase and merge with localStorage.
+  // On logout: reset points, revert completedSymbols to localStorage.
+  useEffect(() => {
+    if (!user) {
+      // Skip the initial mount when user was never logged in (avoids needless re-render)
+      if (!wasLoggedInRef.current) return;
+      wasLoggedInRef.current = false;
+      hasSyncedRef.current = false;
+      setPoints(0);
+      try {
+        const saved = localStorage.getItem('bopobear_completed');
+        setCompletedSymbols(saved ? new Set(JSON.parse(saved)) : new Set());
+      } catch {
+        setCompletedSymbols(new Set());
+      }
+      return;
+    }
+
+    wasLoggedInRef.current = true;
+    loadProgress(user.id)
+      .then(({ completed_symbols: remote, points: remotePoints }) => {
+        setCompletedSymbols((prev) => {
+          const merged = new Set([...prev, ...remote]);
+          localStorage.setItem('bopobear_completed', JSON.stringify([...merged]));
+          return merged;
+        });
+        setPoints((p) => Math.max(p, remotePoints));
+        hasSyncedRef.current = true;
+      })
+      .catch((err) => {
+        console.error(err);
+        // Allow saves to proceed with local state even if cloud load failed
+        hasSyncedRef.current = true;
+      });
+  }, [user?.id]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Debounced save to Supabase after any progress change (skips before initial sync)
+  useEffect(() => {
+    if (!user || !hasSyncedRef.current) return;
+    clearTimeout(saveTimerRef.current);
+    saveTimerRef.current = setTimeout(() => {
+      saveProgress(user.id, { completedSymbols, points }).catch(console.error);
+    }, 1500);
+    return () => clearTimeout(saveTimerRef.current);
+  }, [points, completedSymbols, user]);
 
   // level is 1-based; cap at max level (length of LEVEL_THRESHOLDS)
   const level = Math.min(
