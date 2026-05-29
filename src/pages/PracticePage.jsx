@@ -7,6 +7,7 @@ import Sidebar from '../components/Sidebar';
 import PracticeCanvas from '../components/PracticeCanvas';
 import { prefetchSymbols } from '../utils/charData';
 import ResultOverlay from '../components/ResultOverlay';
+import WordPanel from '../components/WordPanel';
 import { playZhuyin } from '../utils/speech';
 
 export default function PracticePage() {
@@ -88,6 +89,7 @@ export default function PracticePage() {
         </Sidebar>
 
         <main className="practice-main">
+          <div className="practice-body">
           <PracticeCanvas
             key={symbol}
             symbol={symbol}
@@ -133,6 +135,8 @@ export default function PracticePage() {
               </>
             }
           />
+          <WordPanel symbol={symbol} />
+          </div>
 
           <ResultOverlay
             onAgain={() => setMode('example')}
