@@ -3,42 +3,49 @@ import { SYMBOL_WORDS_MAP } from '../data/words';
 
 const TONE_MARKS = new Set(['ˊ', 'ˇ', 'ˋ', '˙']);
 
-// 聲調符號對應的垂直對齊位置
-// ˊ 二聲：頂部  ˇ 三聲：中間  ˋ 四聲：底部  ˙ 輕聲：頂部
-const TONE_ALIGN = { 'ˊ': 'flex-start', 'ˇ': 'center', 'ˋ': 'flex-end', '˙': 'flex-start' };
-
 // 把注音字串拆成 { bases: string[], tone: string }
-// 例: 'ㄆㄧㄥˊ' → { bases: ['ㄆ','ㄧ','ㄥ'], tone: 'ˊ' }
-//     '˙ㄗ'     → { bases: ['ㄗ'],           tone: '˙' }
-//     'ㄇㄠ'    → { bases: ['ㄇ','ㄠ'],       tone: ''  }
+// 'ㄆㄧㄥˊ' → { bases: ['ㄆ','ㄧ','ㄥ'], tone: 'ˊ' }
+// '˙ㄗ'     → { bases: ['ㄗ'],           tone: '˙' }
+// 'ㄇㄠ'    → { bases: ['ㄇ','ㄠ'],       tone: ''  }
 function parseZhuyin(str) {
   if (!str) return { bases: [], tone: '' };
   const chars = [...str];
   let tone = '';
-  // 輕聲 ˙ 在字首
   if (chars[0] === '˙') { tone = '˙'; chars.shift(); }
-  // 其他聲調在字尾
   else if (TONE_MARKS.has(chars[chars.length - 1])) { tone = chars.pop(); }
   return { bases: chars, tone };
 }
 
+// 規則：
+//   ˙（輕聲）→ 標在整個注音欄正上方
+//   ˊˇˋ     → 固定在最後一個注音符號的右上角
 function ZhuyinAnnotation({ zhuyin }) {
   const { bases, tone } = parseZhuyin(zhuyin);
+  const isNeutral = tone === '˙';
+
   return (
     <div className="word-panel__zhuyin">
-      <div className="word-panel__zhuyin-col">
-        {bases.map((ch, j) => (
-          <span key={j} className="word-panel__zhuyin-sym">{ch}</span>
-        ))}
-      </div>
-      {tone && (
-        <span
-          className="word-panel__zhuyin-tone"
-          style={{ alignSelf: TONE_ALIGN[tone] ?? 'center' }}
-        >
-          {tone}
-        </span>
+      {/* 輕聲：整欄正上方 */}
+      {isNeutral && (
+        <span className="word-panel__zhuyin-neutral">{tone}</span>
       )}
+
+      {bases.map((ch, j) => {
+        const isLast = j === bases.length - 1;
+        const showTone = isLast && tone && !isNeutral;
+
+        // 最後一個符號：跟調號包在同一個 row 裡，調號貼右上角
+        if (showTone) {
+          return (
+            <div key={j} className="word-panel__zhuyin-last">
+              <span className="word-panel__zhuyin-sym">{ch}</span>
+              <span className="word-panel__zhuyin-tone">{tone}</span>
+            </div>
+          );
+        }
+
+        return <span key={j} className="word-panel__zhuyin-sym">{ch}</span>;
+      })}
     </div>
   );
 }

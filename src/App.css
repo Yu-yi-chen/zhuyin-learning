@@ -978,16 +978,20 @@ img { display: block; }
 
 .word-panel__zhuyin {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.word-panel__zhuyin-col {
-  display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+/* 輕聲 ˙：在整個注音欄正上方置中 */
+.word-panel__zhuyin-neutral {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1;
+  text-align: center;
+}
+
+/* 一般注音符號 */
 .word-panel__zhuyin-sym {
   font-size: 0.78rem;
   font-weight: 600;
@@ -995,12 +999,25 @@ img { display: block; }
   line-height: 1.25;
 }
 
+/* 最後一個符號的容器，relative 讓調號可以 absolute 定位 */
+.word-panel__zhuyin-last {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 調號 ˊˇˋ：絕對定位，不佔寬度，貼在最後符號右上角 */
 .word-panel__zhuyin-tone {
-  font-size: 0.72rem;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  margin-left: 1px;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--text);
-  align-self: center;
-  margin-left: 1px;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 
