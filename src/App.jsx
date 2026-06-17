@@ -62,6 +62,7 @@ export default function App() {
             <FeedbackButton />
             <CreditsModal open={creditsOpen} onClose={() => setCreditsOpen(false)} />
             <AboutModal  open={aboutOpen}   onClose={() => setAboutOpen(false)} />
+            <Analytics />
           </TransitionProvider>
           <Analytics />
         </BrowserRouter>
