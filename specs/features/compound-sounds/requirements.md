@@ -20,9 +20,12 @@
 ```
 - 三個介音群組：ㄧ 系（9個）、ㄨ 系（8個）、ㄩ 系（4個），共 21 個結合韻
 
-### R2：音訊
-- ⚠️ **暫時停用**：尚未找到完整結合韻錄音來源，音訊功能待後續版本補入
-- 原設計為使用 `playZhuyinSequence(symbols, gapMs=80)` 拼接單符號 clip，但實際聆聽效果不佳，故暫不實作
+### R2：音訊（例詞發音）
+- 21 個結合韻代表詞音檔：`public/audio/compounds/{結合韻}.m4a`（Gemini TTS，生成規格見 `features/word-audio/`）
+- **結合韻 tab** 點格子開啟 WordPopover 時**自動播放**該例詞發音（點格子的本意就是「聽」）
+- 卡片內提供**播放鍵**可重播（同 WordPanel 播放鍵樣式，36px 圓形 + SVG 喇叭）
+- 音檔不存在（如聲韻拼 tab 尚無音檔）→ 不自動播放、播放鍵隱藏
+- 歷史：原 `playZhuyinSequence` 拼接單符號 clip 方案聆聽效果不佳，棄用
 
 ## UI
 

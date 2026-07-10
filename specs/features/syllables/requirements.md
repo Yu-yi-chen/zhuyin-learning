@@ -58,3 +58,11 @@ export const INITIALS_FOR_MEDIAL = { 'ㄧ': [...], 'ㄨ': [...], 'ㄩ': [...] };
 - 點擊導航至 `/syllables`
 - 卡片圖片：`/三拼音.png`
 - 四張卡片等高等寬：`grid-template-rows: 1fr 1fr`，grid 高度 `clamp(320px, calc(100svh - 200px), 500px)`
+
+### R7-B：功能完成前鎖定（現況）
+- 三拼音尚未完成（詞彙待審、插圖 122/156、音檔未做），首頁卡片暫時鎖定：
+  - `disabled` + `pointer-events: none`，點擊無效
+  - 圖片與標題 35% 透明度 + 去飽和，hover 無效果
+  - 卡片中央顯示徽章：鎖頭 icon + `t.comingSoon`（EN: Coming Soon / JP: 準備中）
+- 路由 `/syllables` 仍可直接訪問（開發測試用）
+- 解鎖方式：移除 HomePage 按鈕的 `--locked` class、`disabled` 與 `.home-v2__card-lock` 徽章

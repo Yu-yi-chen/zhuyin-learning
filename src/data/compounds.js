@@ -7,7 +7,7 @@ export const COMPOUND_GROUPS = [
     medial: 'ㄧ',
     items: [
       { compound: 'ㄧㄚ', symbols: ['ㄧ', 'ㄚ'], romanization: 'ya',   word: '牙',   zhuyin: ['ㄧㄚˊ'],              en: 'Tooth',    jp: 'は',         illustration: '/illustrations/compounds/ㄧㄚ.png' },
-      { compound: 'ㄧㄛ', symbols: ['ㄧ', 'ㄛ'], romanization: 'yo',   word: '哎唷', zhuyin: ['ㄞ', 'ㄧㄛ'],         en: 'Ouch',     jp: 'いたっ',     illustration: '/illustrations/compounds/ㄧㄛ.png' },
+      { compound: 'ㄧㄛ', symbols: ['ㄧ', 'ㄛ'], romanization: 'yo',   word: '讚唷', zhuyin: ['ㄗㄢˋ', 'ㄧㄛ'],      en: 'Awesome!', jp: 'いいね！',   illustration: '/illustrations/compounds/ㄧㄛ.png' },
       { compound: 'ㄧㄝ', symbols: ['ㄧ', 'ㄝ'], romanization: 'ye',   word: '葉子', zhuyin: ['ㄧㄝˋ', '˙ㄗ'],       en: 'Leaf',     jp: 'はっぱ',     illustration: '/illustrations/compounds/ㄧㄝ.png' },
       { compound: 'ㄧㄠ', symbols: ['ㄧ', 'ㄠ'], romanization: 'yao',  word: '藥',   zhuyin: ['ㄧㄠˋ'],              en: 'Medicine', jp: 'くすり',     illustration: '/illustrations/compounds/ㄧㄠ.png' },
       { compound: 'ㄧㄡ', symbols: ['ㄧ', 'ㄡ'], romanization: 'you',  word: '油',   zhuyin: ['ㄧㄡˊ'],              en: 'Oil',      jp: 'あぶら',     illustration: '/illustrations/compounds/ㄧㄡ.png' },
@@ -23,7 +23,7 @@ export const COMPOUND_GROUPS = [
       { compound: 'ㄨㄚ', symbols: ['ㄨ', 'ㄚ'], romanization: 'wa',   word: '蛙',   zhuyin: ['ㄨㄚ'],               en: 'Frog',     jp: 'かえる',     illustration: '/illustrations/compounds/ㄨㄚ.png' },
       { compound: 'ㄨㄛ', symbols: ['ㄨ', 'ㄛ'], romanization: 'wo',   word: '窩',   zhuyin: ['ㄨㄛ'],               en: 'Nest',     jp: 'す',         illustration: '/illustrations/compounds/ㄨㄛ.png' },
       { compound: 'ㄨㄞ', symbols: ['ㄨ', 'ㄞ'], romanization: 'wai',  word: '外套', zhuyin: ['ㄨㄞˋ', 'ㄊㄠˋ'],     en: 'Coat',     jp: 'コート',     illustration: '/illustrations/compounds/ㄨㄞ.png' },
-      { compound: 'ㄨㄟ', symbols: ['ㄨ', 'ㄟ'], romanization: 'wei',  word: '尾巴', zhuyin: ['ㄨㄟˇ', '˙ㄅㄚ'],     en: 'Tail',     jp: 'しっぽ',     illustration: '/illustrations/compounds/ㄨㄟ.png' },
+      { compound: 'ㄨㄟ', symbols: ['ㄨ', 'ㄟ'], romanization: 'wei',  word: '圍巾', zhuyin: ['ㄨㄟˊ', 'ㄐㄧㄣ'],    en: 'Scarf',    jp: 'マフラー',   illustration: '/illustrations/compounds/ㄨㄟ.png' },
       { compound: 'ㄨㄢ', symbols: ['ㄨ', 'ㄢ'], romanization: 'wan',  word: '晚上', zhuyin: ['ㄨㄢˇ', 'ㄕㄤˋ'],     en: 'Evening',  jp: 'よる',       illustration: '/illustrations/compounds/ㄨㄢ.png' },
       { compound: 'ㄨㄣ', symbols: ['ㄨ', 'ㄣ'], romanization: 'wen',  word: '蚊子', zhuyin: ['ㄨㄣˊ', '˙ㄗ'],       en: 'Mosquito', jp: 'か',         illustration: '/illustrations/compounds/ㄨㄣ.png' },
       { compound: 'ㄨㄤ', symbols: ['ㄨ', 'ㄤ'], romanization: 'wang', word: '汪汪', zhuyin: ['ㄨㄤ', 'ㄨㄤ'],       en: 'Woof',     jp: 'ワンワン',   illustration: '/illustrations/compounds/ㄨㄤ.png' },

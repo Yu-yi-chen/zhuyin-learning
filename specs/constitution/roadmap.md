@@ -51,6 +51,7 @@
 - [x] 製作 21 個結合韻插圖（Gemini AI 生成，同例詞插圖 pipeline）
 - [ ] 製作 ~120 個三拼音詞插圖
 - [ ] 實作聽力測驗擴充（結合韻 + 三拼音 + 雙拼音主題）
+- [ ] 插圖優化：目前 1024px PNG 共 265MB，merge 前縮至 512px + 壓縮（或轉 WebP）
 - [ ] `feature/word-examples` merge 至 main
 - [ ] `feature/compound-syllables` merge 至 main
 

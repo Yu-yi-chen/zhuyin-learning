@@ -2922,6 +2922,24 @@ img { display: block; }
   line-height: 1;
 }
 
+.wp__play {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #AF9061;
+  background: #fdf8ee;
+  color: #AF9061;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  margin-left: 8px;
+  cursor: pointer;
+  transition: background .15s, transform .1s;
+}
+.wp__play:hover { background: #faf0d4; transform: scale(1.08); }
+.wp__play:active { transform: scale(0.95); }
+
 .wp__translation {
   font-size: 1.05rem;
   color: var(--text-muted);
