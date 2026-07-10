@@ -5,10 +5,12 @@ import { useAuth } from '../contexts/AuthContext';
 import { startBGM, playEnterGame } from '../utils/sound';
 import VolumeButton from '../components/VolumeButton';
 
-const IMG_LANDSCAPE = '/首頁草地.png';
-const IMG_CLOUD     = '/cloud.png';
-const IMG_MAP_CARD  = '/Bopo Explore Map.png';
-const IMG_LISTEN    = '/Listening Test.png';
+const IMG_LANDSCAPE  = '/首頁草地.png';
+const IMG_CLOUD      = '/cloud.png';
+const IMG_MAP_CARD   = '/Bopo Explore Map.png';
+const IMG_LISTEN     = '/Listening Test.png';
+const IMG_SYLLABLES  = '/三拼音.png';
+const IMG_COMPOUND   = '/結合韻.png';
 
 export default function HomePage() {
   const { transitionTo } = useTransition();
@@ -89,6 +91,22 @@ export default function HomePage() {
             >
               <span className="home-v2__card-title">{t.mapCard}</span>
               <img src={IMG_MAP_CARD} alt={t.mapCard} className="home-v2__card-img" />
+            </button>
+
+            <button
+              className="home-v2__card"
+              onClick={(e) => { playEnterGame(); transitionTo('/compound', e); }}
+            >
+              <span className="home-v2__card-title">{t.compoundCard}</span>
+              <img src={IMG_COMPOUND} alt={t.compoundCard} className="home-v2__card-img" />
+            </button>
+
+            <button
+              className="home-v2__card"
+              onClick={(e) => { playEnterGame(); transitionTo('/syllables', e); }}
+            >
+              <span className="home-v2__card-title">{t.syllablesCard}</span>
+              <img src={IMG_SYLLABLES} alt={t.syllablesCard} className="home-v2__card-img" />
             </button>
 
             <button

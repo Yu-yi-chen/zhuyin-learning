@@ -107,3 +107,39 @@ export async function playZhuyin(symbol) {
     if (_src === source) _src = null;
   };
 }
+
+// 依序播放多個符號（結合韻 / 三拼音用）
+// symbols: e.g. ['ㄧ', 'ㄚ'] 或 ['ㄅ', 'ㄧ', 'ㄝ']
+// gapMs: 每個符號之間的間隔（毫秒）
+export async function playZhuyinSequence(symbols, gapMs = 80) {
+  if (!symbols.length) return;
+  const ctx = getCtx();
+  if (ctx.state === 'suspended') await Tone.start();
+
+  if (_src) { try { _src.stop(0); } catch {} _src = null; }
+
+  const buffer = await getBuffer();
+  const gapSec = gapMs / 1000;
+  let timeOffset = 0;
+  let lastSource = null;
+
+  for (const sym of symbols) {
+    const clip = CLIPS[sym];
+    if (!clip) continue;
+    const [start, end] = clip;
+    const duration = end - start;
+
+    const source = ctx.createBufferSource();
+    source.buffer = buffer;
+    source.connect(ctx.destination);
+    source.start(ctx.currentTime + timeOffset, start, duration);
+
+    timeOffset += duration + gapSec;
+    lastSource = source;
+  }
+
+  _src = lastSource;
+  if (lastSource) {
+    lastSource.onended = () => { if (_src === lastSource) _src = null; };
+  }
+}

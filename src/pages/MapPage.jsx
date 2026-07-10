@@ -5,6 +5,7 @@ import { useLang } from '../contexts/LangContext';
 import { useGame } from '../contexts/GameContext';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
+import QuizShortcut from '../components/QuizShortcut';
 import { startBGM } from '../utils/sound';
 import { preloadZhuyin } from '../utils/speech';
 
@@ -34,7 +35,7 @@ export default function MapPage() {
         <Sidebar />
 
         <main className="map-main">
-          {/* Category tabs */}
+          {/* Category tabs + 聽力測驗捷徑 */}
           <div className="cat-tabs">
             {tabs.map((tab) => (
               <button
@@ -45,6 +46,7 @@ export default function MapPage() {
                 {tab.label}
               </button>
             ))}
+            <QuizShortcut theme="symbol" />
           </div>
 
           {/* Symbol grid — key forces remount (re-triggers stagger) on tab change */}

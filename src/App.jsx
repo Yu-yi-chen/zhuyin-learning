@@ -12,6 +12,8 @@ import HomePage from './pages/HomePage';
 import MapPage from './pages/MapPage';
 import PracticePage from './pages/PracticePage';
 import ListenPage from './pages/ListenPage';
+import CompoundPage from './pages/CompoundPage';
+import SyllablesPage from './pages/SyllablesPage';
 import './App.css';
 
 export default function App() {
@@ -29,6 +31,8 @@ export default function App() {
               <Route path="/map" element={<MapPage />} />
               <Route path="/practice/:symbol" element={<PracticePage />} />
               <Route path="/listen" element={<ListenPage />} />
+              <Route path="/compound" element={<CompoundPage />} />
+              <Route path="/syllables" element={<SyllablesPage />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
             <button
