@@ -102,11 +102,20 @@ export default function HomePage() {
             </button>
 
             <button
-              className="home-v2__card"
-              onClick={(e) => { playEnterGame(); transitionTo('/syllables', e); }}
+              className="home-v2__card home-v2__card--locked"
+              disabled
+              aria-label={`${t.syllablesCard}（${t.comingSoon ?? 'Coming Soon'}）`}
             >
               <span className="home-v2__card-title">{t.syllablesCard}</span>
               <img src={IMG_SYLLABLES} alt={t.syllablesCard} className="home-v2__card-img" />
+              <span className="home-v2__card-lock" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+                {t.comingSoon ?? 'Coming Soon'}
+              </span>
             </button>
 
             <button

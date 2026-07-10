@@ -44,7 +44,7 @@ export const SYMBOL_WORDS = [
   { symbol: 'ㄣ', word: '門',   zhuyin: ['ㄇㄣˊ'],              en: 'Door',       jp: 'ドア',           illustration: '/illustrations/words/ㄣ.png' },
   { symbol: 'ㄤ', word: '糖果', zhuyin: ['ㄊㄤˊ',  'ㄍㄨㄛˇ'],  en: 'Candy',      jp: 'キャンディ',     illustration: '/illustrations/words/ㄤ.png' },
   { symbol: 'ㄥ', word: '星星', zhuyin: ['ㄒㄧㄥ', 'ㄒㄧㄥ'],   en: 'Star',       jp: 'ほし',           illustration: '/illustrations/words/ㄥ.png' },
-  { symbol: 'ㄦ', word: '耳朵', zhuyin: ['ㄦˇ',    '˙ㄉㄨㄛ'],  en: 'Ear',        jp: 'みみ',           illustration: '/illustrations/words/ㄦ.png' },
+  { symbol: 'ㄦ', word: '耳機', zhuyin: ['ㄦˇ',    'ㄐㄧ'],     en: 'Headphones', jp: 'ヘッドホン',     illustration: '/illustrations/words/ㄦ.png' },
 ];
 
 // 快速查詢 Map：symbol → word entry

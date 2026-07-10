@@ -12,7 +12,8 @@ import { SYMBOL_WORDS } from '../src/data/words.js';
 import { COMPOUND_GROUPS } from '../src/data/compounds.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const MODEL = 'gemini-2.5-flash-preview-tts';
+// pro 模型另有獨立額度；指示句必須用英文（全中文指示會被拒答 finishReason: OTHER）
+const MODEL = 'gemini-2.5-pro-preview-tts';
 const VOICE = 'Leda';
 const RETRIES = 2; // 每日 100 請求上限（per model），重試次數保守以免燒光額度
 
@@ -65,7 +66,7 @@ async function tts(word) {
       headers: { 'x-goog-api-key': apiKey, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         contents: [{
-          parts: [{ text: `用台灣國語、清晰親切的兒童教學語氣唸出這個詞：${word}` }],
+          parts: [{ text: `Say this word clearly in Taiwanese Mandarin, in a warm teaching voice for children: ${word}` }],
         }],
         generationConfig: {
           responseModalities: ['AUDIO'],

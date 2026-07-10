@@ -12,6 +12,7 @@ import { fileURLToPath } from 'node:url';
 import { SYMBOL_WORDS } from '../src/data/words.js';
 import { COMPOUND_GROUPS } from '../src/data/compounds.js';
 import { SYLLABLE_WORDS } from '../src/data/syllable-words.js';
+import { DUPLEX_WORDS } from '../src/data/duplex.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const STYLE_REF = resolve(ROOT, 'scripts/style-ref-white.png');
@@ -31,6 +32,10 @@ const SETS = {
   syllables: {
     outDir: 'public/illustrations/syllables',
     items: Object.entries(SYLLABLE_WORDS).map(([key, e]) => ({ key, ...e })),
+  },
+  duplex: {
+    outDir: 'public/illustrations/duplex',
+    items: Object.entries(DUPLEX_WORDS).map(([key, e]) => ({ key, ...e })),
   },
 };
 

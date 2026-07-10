@@ -675,6 +675,39 @@ img { display: block; }
   object-position: center bottom;
 }
 
+/* 未完成功能的鎖定卡片 */
+.home-v2__card--locked {
+  position: relative;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.home-v2__card--locked .home-v2__card-title,
+.home-v2__card--locked .home-v2__card-img {
+  opacity: 0.35;
+  filter: grayscale(0.6);
+}
+.home-v2__card--locked:hover {
+  border-color: #edebdf;
+  box-shadow: 0px 4px 0 0 #edebdf;
+  transform: none;
+}
+.home-v2__card-lock {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  background: rgba(44, 40, 37, 0.72);
+  color: #fffef9;
+  font-size: 0.95rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
 /* ── Map page ─────────────────────────────────────────────── */
 
 .map-progress {
