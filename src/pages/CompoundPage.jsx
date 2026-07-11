@@ -128,7 +128,11 @@ export default function CompoundPage() {
 
       <WordPopover
         entry={popover?.entry ?? null}
-        audioSrc={popover?.entry?.compound ? `/audio/compounds/${popover.entry.compound}.m4a` : null}
+        audioSrc={popover
+          ? (popover.entry?.compound
+              ? `/audio/compounds/${popover.entry.compound}.m4a`
+              : `/audio/duplex/${popover.key}.m4a`)
+          : null}
         onClose={() => setPopover(null)}
       />
     </div>

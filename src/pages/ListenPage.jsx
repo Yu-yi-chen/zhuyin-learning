@@ -6,7 +6,7 @@ import { useLang } from '../contexts/LangContext';
 import { useGame } from '../contexts/GameContext';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
-import ZhuyinColumn from '../components/ZhuyinColumn';
+import ZhuyinColumn, { parseZhuyin } from '../components/ZhuyinColumn';
 import { playZhuyin, preloadZhuyin } from '../utils/speech';
 import { playSuccess, setBGMMuted, isBGMMuted, stopBGM, startBGM } from '../utils/sound';
 import HanziWriter from 'hanzi-writer';
@@ -46,11 +46,16 @@ function pickOptions(theme, all, correct, count = 4, challenge = false) {
   return shuffle([...distractors, correct]);
 }
 
-function buildQuestion(theme, challenge = false) {
+function buildQuestion(theme, challenge = false, exclude = []) {
   const all = theme === 'compound' ? COMPOUND_ITEMS : SYMBOL_ITEMS;
-  const correct = all[Math.floor(Math.random() * all.length)];
+  // 防重複：排除最近出過的題目（全被排除時退回全部）
+  let pool = all.filter((i) => !exclude.includes(i.key));
+  if (!pool.length) pool = all;
+  const correct = pool[Math.floor(Math.random() * pool.length)];
   return { correct, options: pickOptions(theme, all, correct, 4, challenge) };
 }
+
+const RECENT_LIMIT = 8;
 
 // Auto-animating stroke preview
 function StrokePreview({ symbol, size = 130 }) {
@@ -93,9 +98,21 @@ export default function ListenPage() {
     return () => { if (!wasMuted) { setBGMMuted(false); startBGM(); } };
   }, []);
 
-  const [question, setQuestion]     = useState(() => buildQuestion(
-    searchParams.get('theme') === 'compound' ? 'compound' : 'symbol',
-    (localStorage.getItem('bopobear_difficulty') ?? 'easy') === 'challenge'));
+  // 防重複：記住最近出過的題目 key
+  const recentRef = useRef([]);
+  const makeQuestion = useCallback((th, challenge) => {
+    const q = buildQuestion(th, challenge, recentRef.current);
+    recentRef.current = [...recentRef.current, q.correct.key].slice(-RECENT_LIMIT);
+    return q;
+  }, []);
+
+  const [question, setQuestion]     = useState(() => {
+    const q = buildQuestion(
+      searchParams.get('theme') === 'compound' ? 'compound' : 'symbol',
+      (localStorage.getItem('bopobear_difficulty') ?? 'easy') === 'challenge');
+    recentRef.current = [q.correct.key];
+    return q;
+  });
   // wrongSet: option keys the user already tried and got wrong this round
   const [wrongSet, setWrongSet]     = useState(() => new Set());
   const [solved, setSolved]         = useState(false);
@@ -107,6 +124,13 @@ export default function ListenPage() {
   const { correct, options } = question;
   const hadWrong = wrongSet.size > 0;
   const isCompound = theme === 'compound';
+  // 挖空目標 = 注音中「等於目標結合韻」的那個音節（不一定在第一位，如 讚唷 的 ㄧㄛ）
+  const targetIndex = isCompound
+    ? Math.max(0, (correct.zhuyin ?? []).findIndex(
+        (z) => parseZhuyin(z).bases.join('') === correct.compound))
+    : 0;
+  // 選項聲調 = 目標音節的聲調（干擾選項同調，測韻不測調，R10）
+  const optionTone = isCompound ? parseZhuyin(correct.zhuyin?.[targetIndex]).tone : '';
 
   // 播放當前題目（符號 → playZhuyin；結合韻 → 代表詞音檔）
   const wordAudioRef = useRef(null);
@@ -126,16 +150,16 @@ export default function ListenPage() {
     localStorage.setItem('bopobear_difficulty', d);
     setSolved(false);
     setWrongSet(new Set());
-    setQuestion(buildQuestion(theme, d === 'challenge'));
-  }, [theme]);
+    setQuestion(makeQuestion(theme, d === 'challenge'));
+  }, [theme, makeQuestion]);
 
   const switchTheme = useCallback((next) => {
     if (next === theme) return;
     setTheme(next);
     setSolved(false);
     setWrongSet(new Set());
-    setQuestion(buildQuestion(next, isChallenge));
-  }, [theme, isChallenge]);
+    setQuestion(makeQuestion(next, isChallenge));
+  }, [theme, isChallenge, makeQuestion]);
 
   const isFirstMount = useRef(true);
   useEffect(() => {
@@ -170,8 +194,8 @@ export default function ListenPage() {
   const handleNext = useCallback(() => {
     setSolved(false);
     setWrongSet(new Set());
-    setQuestion(buildQuestion(theme, isChallenge));
-  }, [theme, isChallenge]);
+    setQuestion(makeQuestion(theme, isChallenge));
+  }, [theme, isChallenge, makeQuestion]);
 
   const toggleStroke = useCallback(() => {
     setShowStroke((v) => {
@@ -270,6 +294,27 @@ export default function ListenPage() {
 
           <p className="lq-prompt">{isCompound ? t.listenPromptCompound : t.listenPrompt}</p>
 
+          {/* 出題提示圖：僅 Beginner（R10） */}
+          {isCompound && !isChallenge && correct.illustration && (
+            <img src={correct.illustration} alt="" className="lq-cloze__hint-img" aria-hidden="true" />
+          )}
+
+          {/* 克漏字題面：目標音節（第一個）挖空，其餘音節完整（R10） */}
+          {isCompound && (
+            <div className="lq-cloze">
+              {correct.zhuyin.map((z, i) => (
+                i === targetIndex && !solved
+                  ? <div key={`${correct.key}-${i}`} className="lq-cloze__blank" aria-label="？" />
+                  : (
+                    <div key={`${correct.key}-${i}`}
+                      className={`lq-cloze__col${i === targetIndex ? ' lq-cloze__col--revealed' : ''}`}>
+                      <ZhuyinColumn zhuyin={z} />
+                    </div>
+                  )
+              ))}
+            </div>
+          )}
+
           {/* Options — wrong ones stay red & disabled; others remain clickable */}
           <div key={correct.key} className="lq-options">
             {options.map(({ key, display, romanization }, index) => {
@@ -293,7 +338,19 @@ export default function ListenPage() {
                   disabled={solved || isWrong}
                 >
                   <span className={`lq-option__symbol${display.length > 1 ? ' lq-option__symbol--stack' : ''}`}>
-                    {display.map((sym) => <span key={sym}>{sym}</span>)}
+                    {display.map((sym, i) => {
+                      const isLast = i === display.length - 1;
+                      // ˊˇˋ 掛在最後一個符號的右上角（同注音標記規則）
+                      if (isLast && optionTone && optionTone !== '˙') {
+                        return (
+                          <span key={sym} className="lq-option__last">
+                            {sym}
+                            <span className="lq-option__tone">{optionTone}</span>
+                          </span>
+                        );
+                      }
+                      return <span key={sym}>{sym}</span>;
+                    })}
                   </span>
                   {(!isChallenge || solved || hadWrong) && (
                     <span className="lq-option__roman">{romanization}</span>

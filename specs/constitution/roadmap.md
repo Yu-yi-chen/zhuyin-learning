@@ -34,9 +34,9 @@
 
 | 功能 | 狀態 | Feature Spec |
 |------|------|-------------|
-| 雙拼音頁（/compound，聲母+韻母 tab + 結合韻 tab 合併） | 🔄 程式 + 插圖完成，待音訊 | `features/compound-sounds/`（R12–R14） |
-| 三拼音練習（/syllables） | 🔄 待音訊、待插圖（~120 張） | `features/syllables/` |
-| 聽力測驗擴充：結合韻主題 + 模組捷徑 | 🔄 程式完成，待 21 個詞音檔（TTS 每日額度限制） | `features/listen-quiz/`（R9–R11） |
+| 雙拼音頁（/compound，聲母+韻母 tab + 結合韻 tab 合併） | 🔄 程式 + 插圖 + 結合韻音訊完成；聲韻拼音訊 3/130 | `features/compound-sounds/`（R12–R14） |
+| 三拼音練習（/syllables） | 🔄 首頁卡片鎖定中；待詞彙審核、插圖 122/156、音訊 | `features/syllables/` |
+| 聽力測驗擴充：結合韻主題（克漏字）+ 模組捷徑 | ✅ 完成（含出題提示圖、同調選項、答對卡片） | `features/listen-quiz/`（R9–R11） |
 | 聽力測驗擴充：三拼音主題 | ⏸ 詞彙定稿後再規劃 | — |
 | 首頁 4 卡片 2×2 grid | ✅ 完成 | — |
 | 浮動卡片（WordPopover，動態定位） | ✅ 完成 | — |
@@ -45,12 +45,13 @@
 
 - [x] 實作雙拼音（與結合韻合併於 `/compound`，tab 切換；`duplex.js` 130 個聲韻組合例詞）
 - [x] ~~首頁 5 卡片佈局~~（合併方案不需要，維持 4 卡，卡片改名「雙拼音／Sound Pairs」）
-- [x] 音訊方案確定：Gemini TTS（例詞 37 個 ✅；結合韻 21 個待額度；三拼音待詞彙定稿）
+- [x] 音訊方案確定：Gemini TTS（例詞 37 ✅；結合韻 21 ✅；聲韻拼 3/130 分日續跑；三拼音待詞彙定稿）
+- [x] 實作聽力測驗結合韻主題（克漏字題型 + 主題選擇器 + 模組捷徑）
 - [x] 製作 ~130 個雙拼音（聲韻拼）例詞插圖
 - [x] 製作 37 個注音例詞插圖（Gemini AI 生成，`scripts/generate-illustrations.mjs` + 去背 `scripts/remove-background.py`）
 - [x] 製作 21 個結合韻插圖（Gemini AI 生成，同例詞插圖 pipeline）
 - [ ] 製作 ~120 個三拼音詞插圖
-- [ ] 實作聽力測驗擴充（結合韻 + 三拼音 + 雙拼音主題）
+- [ ] 聽力測驗再擴充：三拼音、雙拼音（聲韻拼）主題——沿用克漏字題型，待各自音檔就緒
 - [ ] 插圖優化：目前 1024px PNG 共 265MB，merge 前縮至 512px + 壓縮（或轉 WebP）
 - [ ] `feature/word-examples` merge 至 main
 - [ ] `feature/compound-syllables` merge 至 main

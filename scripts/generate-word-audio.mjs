@@ -10,6 +10,7 @@ import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
 import { SYMBOL_WORDS } from '../src/data/words.js';
 import { COMPOUND_GROUPS } from '../src/data/compounds.js';
+import { DUPLEX_WORDS } from '../src/data/duplex.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 // pro 模型另有獨立額度；指示句必須用英文（全中文指示會被拒答 finishReason: OTHER）
@@ -26,6 +27,10 @@ const SETS = {
     outDir: 'public/audio/compounds',
     items: COMPOUND_GROUPS.flatMap((g) =>
       g.items.map((e) => ({ key: e.compound, word: e.word }))),
+  },
+  duplex: {
+    outDir: 'public/audio/duplex',
+    items: Object.entries(DUPLEX_WORDS).map(([key, e]) => ({ key, word: e.word })),
   },
 };
 

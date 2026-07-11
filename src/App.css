@@ -1918,11 +1918,61 @@ img { display: block; }
 
 /* 結合韻主題：直式雙符號 */
 .lq-option__symbol--stack {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   font-size: 26px;
   line-height: 1.15;
+}
+
+/* 選項聲調（與答案同調，掛在最後一個符號的右上角） */
+.lq-option__last {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+}
+.lq-option__tone {
+  position: absolute;
+  top: -4px;
+  left: 100%;
+  margin-left: 3px;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* 出題提示圖（Beginner） */
+.lq-cloze__hint-img {
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+/* ── 克漏字題面（結合韻主題）── */
+.lq-cloze {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 18px;
+  min-height: 72px;
+}
+.lq-cloze .wp__zhuyin-sym  { font-size: 1.35rem; }
+.lq-cloze .wp__zhuyin-tone { font-size: 1.4rem; }
+.lq-cloze .wp__zhuyin-neutral { font-size: 1.1rem; }
+.lq-cloze__blank {
+  width: 44px;
+  align-self: stretch;
+  min-height: 64px;
+  border: 2.5px dashed var(--gold);
+  border-radius: var(--radius-sm);
+  background: rgba(175, 144, 97, 0.06);
+}
+.lq-cloze__col--revealed .wp__zhuyin-sym,
+.lq-cloze__col--revealed .wp__zhuyin-tone {
+  color: #AF9061;
 }
 
 .lq-option__roman {
@@ -1940,12 +1990,17 @@ img { display: block; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
+  background: #fffef9;
+  border: 1.5px solid var(--gold);
+  border-radius: var(--radius-md);
+  box-shadow: 0 12px 40px rgba(44, 40, 37, .22);
+  padding: 16px 28px 14px;
 }
 
 .lq-result-word__img {
-  width: 150px;
-  height: 150px;
+  width: 110px;
+  height: 110px;
   object-fit: contain;
 }
 
@@ -2308,12 +2363,17 @@ img { display: block; }
   .home-v2__cards   { gap: 10px; }
   .home-v2__card    { border-radius: 28px; gap: 12px; }
 
-  /* Listen correct-answer overlay — Next button pinned to viewport bottom-center */
+  /* Listen correct-answer overlay — Next button pinned to viewport bottom-center.
+     置中用 left/right + margin auto（不用 translateX，避免被 :hover/:active 的
+     transform: scale 蓋掉而移位） */
   .lq-result-next {
     position: fixed;
     bottom: 32px;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
     z-index: 400;
     white-space: nowrap;
   }

@@ -8,7 +8,9 @@
 ## 範圍
 
 - **完成**：注音地圖 37 個例詞（`words.js`）音檔 + WordPanel 播放鍵 ✅
-- **進行中**：結合韻 21 詞（`compounds.js`，詞已定稿；供聽力測驗結合韻主題使用）
+- **完成**：結合韻 21 詞（`compounds.js`）✅ — 用於聽力測驗結合韻主題 + WordPopover 自動播放
+- **進行中**：聲韻拼 130 詞（`duplex.js`）🔄 3/130 — TTS 每日額度限制，分日續跑
+  `node scripts/generate-word-audio.mjs duplex`
 - **暫緩**：三拼音 156 詞（詞彙尚可能調整，定稿後再生成）
 
 ## 解法
