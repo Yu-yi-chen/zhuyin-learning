@@ -11,7 +11,7 @@
   zhuyin: ['ㄅㄟ', '˙ㄗ'],  // 每個字的注音（陣列長度 = 字數）
   en: 'Cup',
   jp: 'コップ',
-  illustration: '/illustrations/words/ㄅ.png',  // 檔名 = 符號
+  illustration: '/illustrations/words/ㄅ.webp',  // 檔名 = 符號
 }
 ```
 
@@ -28,9 +28,12 @@
 
 ### R4：插圖區
 - 有 `illustration` 路徑時顯示 `<img>`；為 `null` 時顯示灰色佔位框（虛線邊框、固定比例）
-- 插圖規格：3D 黏土風格、透明背景 PNG、1024×1024
-- 產製流程：`scripts/generate-illustrations.mjs`（Gemini API 生成白底圖，以 `scripts/style-ref-white.png` 為風格參考）→ `scripts/remove-background.py`（去背為透明）
-- 重生成單張：刪除 `public/illustrations/words/{符號}.png` 後重跑上述兩個腳本
+- **上線格式：512×512 透明 WebP（q92）**，部署於 `public/illustrations/`；app 最大顯示 240px，畫質無感差
+- 產製流程：
+  1. `scripts/generate-illustrations.mjs`（Gemini 生成 1024px 白底 PNG，風格參考 `scripts/style-ref-white.png`）
+  2. `scripts/remove-background.py`（去背為透明 PNG）
+  3. `scripts/optimize-illustrations.py`（1024 PNG → 512 WebP q92；原始 PNG 移至 `assets-src/` 備份，gitignore）
+- 重生成單張：刪 `public/illustrations/words/{符號}.webp` + `assets-src/.../{符號}.png` 後重跑上述流程
 
 ### R5：注音標記
 - 使用自訂 flex 佈局（非原生 `<ruby>`），每個字對應一個 `.word-panel__char-wrap`

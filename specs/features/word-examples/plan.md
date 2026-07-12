@@ -23,7 +23,7 @@
 | `src/pages/PracticePage.jsx` | 加入 WordPanel 元件 |
 | `src/components/WordPanel.jsx` | 新建 — 單字展示 UI |
 | `src/App.css` | 新增 `.word-panel` 相關樣式 |
-| `public/illustrations/words/` | 插圖資料夾（檔名 = 符號，如 `ㄅ.png`）|
+| `public/illustrations/words/` | 插圖資料夾（512px WebP，檔名 = 符號，如 `ㄅ.webp`）|
 | `scripts/generate-illustrations.mjs` | 插圖批次生成（Gemini API）|
 | `scripts/remove-background.py` | 白底 → 透明背景後製 |
 

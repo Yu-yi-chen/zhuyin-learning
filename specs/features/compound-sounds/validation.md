@@ -61,5 +61,6 @@
 
 ## 已知限制
 
-- 插圖為 AI 生成（Gemini），單張重生成：刪除 `public/illustrations/compounds/{結合韻}.png` 後重跑 `node scripts/generate-illustrations.mjs compounds` + 去背腳本
+- 插圖為 AI 生成（Gemini）→ 去背 → 512px WebP q92；上線圖為 `.webp`
+- 單張重生成：刪 `.webp` + `assets-src` 內對應 `.png` 後重跑 生成 → 去背 → optimize 三腳本
 - 音訊暫停用，待找到完整結合韻錄音來源後補入
