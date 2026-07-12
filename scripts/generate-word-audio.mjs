@@ -93,7 +93,8 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 mkdirSync(OUT_DIR, { recursive: true });
 
-let ok = 0, skipped = 0, failed = [];
+let ok = 0, skipped = 0, failed = [], consecutive429 = 0;
+const STOP_AFTER_429 = 3;   // 連續 3 次 429 = 額度已空，直接停止（避免空跑）
 
 for (const entry of SET.items) {
   const m4aPath = resolve(OUT_DIR, `${entry.key}.m4a`);
@@ -101,19 +102,35 @@ for (const entry of SET.items) {
 
   process.stdout.write(`${entry.key} ${entry.word} … `);
   let pcm = null;
+  let quotaOut = false;
+  // OTHER 只重試 1 次（重試多半也拒答、白燒額度）；429 不算「嘗試」，等額度而非重試
   for (let attempt = 1; attempt <= RETRIES && !pcm; attempt++) {
     try {
       pcm = await tts(entry.word);
+      consecutive429 = 0;
     } catch (err) {
-      if (attempt === RETRIES) {
+      if (err.message.includes('429')) {
+        consecutive429++;
+        quotaOut = true;
+        console.log('✗ 429（額度已空）');
+        break;   // 429 不重試，跳出讓外層判斷是否停止
+      }
+      if (attempt === 2) {
         failed.push(entry.key);
-        console.log(`✗ ${err.message}`);
+        console.log(`✗ ${err.message}（OTHER 詞，改用連唸切割法手動處理）`);
       } else {
-        // 429 等更久讓 quota 視窗重置
-        await sleep(err.message.includes('429') ? 30000 : 8000);
+        await sleep(6000);
       }
     }
   }
+
+  if (quotaOut && consecutive429 >= STOP_AFTER_429) {
+    console.log(`\n⛔ 連續 ${STOP_AFTER_429} 次 429，額度已空，停止批次（明天續跑即可）`);
+    failed.push(entry.key);
+    break;
+  }
+  if (quotaOut) { failed.push(entry.key); continue; }
+
   if (pcm) {
     const wavPath = resolve(OUT_DIR, `${entry.key}.wav`);
     writeFileSync(wavPath, pcmToWav(pcm));
