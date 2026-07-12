@@ -52,7 +52,8 @@
 - [x] 製作 21 個結合韻插圖（Gemini AI 生成，同例詞插圖 pipeline）
 - [ ] 製作 ~120 個三拼音詞插圖
 - [ ] 聽力測驗再擴充：三拼音、雙拼音（聲韻拼）主題——沿用克漏字題型，待各自音檔就緒
-- [ ] 插圖優化：目前 1024px PNG 共 265MB，merge 前縮至 512px + 壓縮（或轉 WebP）
+- [x] 插圖優化：310 張 1024px PNG（257MB）→ 512px WebP q92（4.2MB，1.6%）；
+  原始 PNG 備份於 `assets-src/`（gitignore）；`scripts/optimize-illustrations.py`
 - [ ] `feature/word-examples` merge 至 main
 - [ ] `feature/compound-syllables` merge 至 main
 

@@ -5,3 +5,6 @@ dist
 .vercel
 .DS_Store
 .eslintcache
+
+# 原始高解析素材備份（不部署）
+assets-src/
