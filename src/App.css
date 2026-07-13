@@ -3406,3 +3406,21 @@ img { display: block; }
   .syl-cell__sym  { font-size: 0.72rem; }
   .syllables-table__col-header { min-width: 50px; }
 }
+
+/* ── 首頁卡片 RWD 修正（放最後確保層疊優先，覆蓋 line 3125 的基礎 grid）── */
+/* 手機版：卡片高度改填滿容器，不依賴 100svh 計算（真機網址列會讓 svh 偏高，
+   導致卡片溢出到草地）。canvas 已是 flex:1 正確填滿 navbar 以下的空間。 */
+@media (max-width: 680px) {
+  .home-v2__canvas {
+    align-items: stretch;   /* 讓卡片格撐滿高度 */
+  }
+  .home-v2__cards {
+    height: 100%;
+    max-height: 480px;
+    min-height: 0;
+  }
+}
+@media (max-width: 400px) {
+  .home-v2__canvas { padding-left: 16px; padding-right: 16px; }
+  .home-v2__cards  { gap: 12px; }
+}
