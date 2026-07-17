@@ -89,3 +89,9 @@ export const DUPLEX_FINALS   = ['ㄚ', 'ㄛ', ...];  // 欄順序
 - 有效格：直式雙符號按鈕，點擊 → WordPopover（同 R4-B 置中大卡）
 - 無效格：顯示 —，不可點
 - 插圖 Phase：`illustration` 先為 null（佔位框），之後與其他插圖同 pipeline 生成
+
+### R15：探索進度追蹤
+- 兩個 tab 的格子點開看例詞時，呼叫 `exploreCompound(key)` 標記已探索（見 `game-system` R8）
+- 已探索格子換米棕底色（`.syl-cell--explored` / `.compound-cell--explored`），優先度低於 `--active`
+- Tab 列右側顯示「已探索 X/N」（聲韻拼 /130、結合韻 /21，隨 tab 切換）
+- 純進度追蹤**不加分**；記錄持久化於 localStorage，重整保留

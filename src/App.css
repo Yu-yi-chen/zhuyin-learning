@@ -3231,6 +3231,46 @@ img { display: block; }
   transform: translateY(2px);
 }
 
+/* 已探索格子：與注音地圖的 .symbol-circle--done 同一套視覺（金黃描邊 + 淡黃底） */
+.compound-cell--explored {
+  border-color: #d4a017;
+  box-shadow: 0px 4px 0 0 #d4a017;
+  background: #fefdf5;
+}
+.compound-cell--explored:hover {
+  box-shadow: 0px 6px 0 0 #d4a017;
+}
+.compound-cell--explored.compound-cell--active {
+  background: var(--yellow);
+  border-color: #AF9061;
+  box-shadow: 0px 2px 0 0 #AF9061;
+}
+
+/* Tab 列 + 已探索進度 */
+.compound-tabs-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 16px;
+  flex-wrap: wrap;
+}
+/* tab 不被 flex 壓縮成圓形（窄畫面時整列換行而非擠壓） */
+.compound-tabs-row .syllables-tabs {
+  flex-shrink: 0;
+}
+.compound-tabs-row .syllables-tab {
+  white-space: nowrap;
+}
+.compound-explored {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.compound-explored b {
+  color: #AF9061;
+  font-weight: 700;
+}
+
 .compound-cell__sym {
   font-size: 1.05rem;
   font-weight: 600;
@@ -3381,6 +3421,21 @@ img { display: block; }
   border-color: #AF9061;
   box-shadow: 0px 2px 0 0 #AF9061;
   transform: translateY(2px);
+}
+
+/* 已探索格子：與注音地圖的 .symbol-circle--done 同一套視覺（金黃描邊 + 淡黃底） */
+.syl-cell--explored {
+  border-color: #d4a017;
+  box-shadow: 0px 4px 0 0 #d4a017;
+  background: #fefdf5;
+}
+.syl-cell--explored:hover {
+  box-shadow: 0px 6px 0 0 #d4a017;
+}
+.syl-cell--explored.syl-cell--active {
+  background: var(--yellow);
+  border-color: #AF9061;
+  box-shadow: 0px 2px 0 0 #AF9061;
 }
 
 .syl-cell__sym {

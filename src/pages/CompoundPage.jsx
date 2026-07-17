@@ -8,26 +8,39 @@ import { COMPOUND_GROUPS } from '../data/compounds';
 import { DUPLEX_WORDS, DUPLEX_INITIALS, DUPLEX_FINALS } from '../data/duplex';
 
 import { useLang } from '../contexts/LangContext';
+import { useGame } from '../contexts/GameContext';
 
 export default function CompoundPage() {
   const navigate = useNavigate();
   const { t } = useLang();
+  const { exploredCompounds, exploreCompound } = useGame();
   const [tab, setTab] = useState('duplex'); // 'duplex'（聲母+韻母）| 'medial'（結合韻）
   const [popover, setPopover] = useState(null); // { entry, key }
 
   const handlePlayCompound = useCallback((item) => {
     setPopover({ entry: item, key: item.compound });
-  }, []);
+    exploreCompound(item.compound);
+  }, [exploreCompound]);
 
   const handlePlayDuplex = useCallback((initial, final) => {
     const key = initial + final;
     setPopover({ entry: DUPLEX_WORDS[key], key });
-  }, []);
+    exploreCompound(key);
+  }, [exploreCompound]);
 
   const switchTab = useCallback((next) => {
     setTab(next);
     setPopover(null);
   }, []);
+
+  // 各 tab 已探索進度
+  const duplexTotal   = Object.keys(DUPLEX_WORDS).length;
+  const medialTotal   = COMPOUND_GROUPS.reduce((n, g) => n + g.items.length, 0);
+  const duplexDone    = Object.keys(DUPLEX_WORDS).filter((k) => exploredCompounds.has(k)).length;
+  const medialDone    = COMPOUND_GROUPS.reduce(
+    (n, g) => n + g.items.filter((it) => exploredCompounds.has(it.compound)).length, 0);
+  const exploredCount = tab === 'duplex' ? duplexDone : medialDone;
+  const exploredTotal = tab === 'duplex' ? duplexTotal : medialTotal;
 
   return (
     <div className="page-layout">
@@ -43,15 +56,20 @@ export default function CompoundPage() {
           <p className="compound-page__subtitle">{t.compoundSubtitle ?? '點擊格子看例詞'}</p>
 
           {/* Tab 切換：聲母+韻母 / 結合韻 */}
-          <div className="syllables-tabs">
-            <button
-              className={`syllables-tab${tab === 'duplex' ? ' syllables-tab--active' : ''}`}
-              onClick={() => switchTab('duplex')}
-            >{t.duplexTabSV ?? '聲母+韻母'}</button>
-            <button
-              className={`syllables-tab${tab === 'medial' ? ' syllables-tab--active' : ''}`}
-              onClick={() => switchTab('medial')}
-            >{t.duplexTabMedial ?? '結合韻'}</button>
+          <div className="compound-tabs-row">
+            <div className="syllables-tabs">
+              <button
+                className={`syllables-tab${tab === 'duplex' ? ' syllables-tab--active' : ''}`}
+                onClick={() => switchTab('duplex')}
+              >{t.duplexTabSV ?? '聲母+韻母'}</button>
+              <button
+                className={`syllables-tab${tab === 'medial' ? ' syllables-tab--active' : ''}`}
+                onClick={() => switchTab('medial')}
+              >{t.duplexTabMedial ?? '結合韻'}</button>
+            </div>
+            <span className="compound-explored">
+              {t.explored ?? '已探索'} <b>{exploredCount}</b> / {exploredTotal}
+            </span>
           </div>
 
           {tab === 'duplex' ? (
@@ -79,7 +97,7 @@ export default function CompoundPage() {
                           <td key={final} className="syllables-table__cell">
                             {valid ? (
                               <button
-                                className={`syl-cell${popover?.key === key ? ' syl-cell--active' : ''}`}
+                                className={`syl-cell${popover?.key === key ? ' syl-cell--active' : ''}${exploredCompounds.has(key) ? ' syl-cell--explored' : ''}`}
                                 onClick={() => handlePlayDuplex(initial, final)}
                                 aria-label={key}
                               >
@@ -110,7 +128,7 @@ export default function CompoundPage() {
                   {group.items.map((item) => (
                     <button
                       key={item.compound}
-                      className={`compound-cell${popover?.key === item.compound ? ' compound-cell--active' : ''}`}
+                      className={`compound-cell${popover?.key === item.compound ? ' compound-cell--active' : ''}${exploredCompounds.has(item.compound) ? ' compound-cell--explored' : ''}`}
                       onClick={() => handlePlayCompound(item)}
                       aria-label={item.romanization}
                     >
