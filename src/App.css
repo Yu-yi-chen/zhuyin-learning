@@ -3479,3 +3479,129 @@ img { display: block; }
   .home-v2__canvas { padding-left: 16px; padding-right: 16px; }
   .home-v2__cards  { gap: 12px; }
 }
+
+/* ── 發音評分原型頁（/pronounce）───────────────────────────── */
+.pronounce-page {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  padding: 24px 0 48px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.pronounce-page__title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.pronounce-page__note {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  background: var(--beige);
+  border: 1px dashed var(--gold);
+  border-radius: 999px;
+  padding: 6px 16px;
+  margin: -12px 0 0;
+}
+
+.pronounce-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  background: #fffef9;
+  border: 1.5px solid var(--gold);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 28px rgba(44, 40, 37, .12);
+  padding: 24px 32px 20px;
+  min-width: 260px;
+}
+.pronounce-card__img {
+  width: 160px;
+  height: 160px;
+  object-fit: contain;
+}
+.pronounce-card__word {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+}
+.pronounce-card__translation {
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.pronounce-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.pronounce-btn {
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 2px solid #AF9061;
+  background: #fdf8ee;
+  color: #AF9061;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background .15s, transform .1s, opacity .15s;
+}
+.pronounce-btn:hover:not(:disabled) { background: #faf0d4; transform: scale(1.04); }
+.pronounce-btn:active:not(:disabled) { transform: scale(0.97); }
+.pronounce-btn:disabled { opacity: .45; cursor: not-allowed; }
+.pronounce-btn--rec  { background: #AF9061; color: #fff; }
+.pronounce-btn--rec:hover:not(:disabled) { background: #9c7f54; }
+.pronounce-btn--stop { background: #d9534f; border-color: #d9534f; color: #fff; }
+.pronounce-btn--stop:hover { background: #c9302c; }
+
+.pronounce-status {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+.pronounce-status--rec { color: #d9534f; font-weight: 600; animation: pulse-rec 1s ease-in-out infinite; }
+.pronounce-status--err { color: #d9534f; }
+@keyframes pulse-rec { 50% { opacity: .4; } }
+
+.pronounce-result {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px 8px;
+  border-radius: var(--radius-md);
+  border: 2px solid;
+  padding: 16px 28px;
+  max-width: 360px;
+  text-align: center;
+  animation: popover-in .2s cubic-bezier(.22,1,.36,1) both;
+}
+.pronounce-result__score { font-size: 2.6rem; font-weight: 800; line-height: 1; }
+.pronounce-result__unit  { font-size: 1rem; font-weight: 600; }
+.pronounce-result__feedback {
+  flex-basis: 100%;
+  margin: 6px 0 0;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+.pronounce-result--good  { border-color: #5cb85c; background: #f2fbf2; }
+.pronounce-result--good .pronounce-result__score,
+.pronounce-result--good .pronounce-result__unit { color: #3d8b3d; }
+.pronounce-result--ok    { border-color: #d4a017; background: #fefdf5; }
+.pronounce-result--ok .pronounce-result__score,
+.pronounce-result--ok .pronounce-result__unit { color: #b8860b; }
+.pronounce-result--retry { border-color: #d9534f; background: #fdf4f4; }
+.pronounce-result--retry .pronounce-result__score,
+.pronounce-result--retry .pronounce-result__unit { color: #c9302c; }
+
+@media (max-width: 768px) {
+  .pronounce-page { padding: 16px 16px 40px; }
+  .pronounce-card__img { width: 120px; height: 120px; }
+}

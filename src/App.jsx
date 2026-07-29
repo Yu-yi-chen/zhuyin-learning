@@ -14,6 +14,7 @@ import PracticePage from './pages/PracticePage';
 import ListenPage from './pages/ListenPage';
 import CompoundPage from './pages/CompoundPage';
 import SyllablesPage from './pages/SyllablesPage';
+import PronouncePage from './pages/PronouncePage';
 import './App.css';
 
 export default function App() {
@@ -33,6 +34,8 @@ export default function App() {
               <Route path="/listen" element={<ListenPage />} />
               <Route path="/compound" element={<CompoundPage />} />
               <Route path="/syllables" element={<SyllablesPage />} />
+              {/* 發音評分原型（測試用，首頁無入口） */}
+              <Route path="/pronounce" element={<PronouncePage />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
             <button
